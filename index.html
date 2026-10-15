@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#02050F">
+<title>3PN Business Solution — เข้าใจโจทย์ ส่งมอบระบบที่ใช้ได้จริง</title>
+<meta name="description" content="3PN Business Solution ออกแบบและพัฒนาเว็บไซต์ ระบบงาน และแพลตฟอร์มให้หน่วยงานภาครัฐและเอกชน พร้อมผลิตภัณฑ์ HR Pro, DinePass และ E-Marketplace">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#02050F; --panel:#070D1E; --panel-2:#0B1430;
+  --blue:#1065DC; --volt:#4C9BFF; --mint:#5EF0C8;
+  --text:#E6EEFF; --dim:#8090B2; --faint:#4A587A;
+  --line:rgba(120,160,255,.14);
+  --sans:"IBM Plex Sans Thai",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,"IBM Plex Sans Thai",monospace;
+  --wrap:min(1240px,100% - 48px);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-behavior:smooth;scroll-padding-top:calc(84px + env(safe-area-inset-top,0px));background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--volt);outline-offset:3px;border-radius:4px}
+.wrap{width:var(--wrap);margin-inline:auto}
+.mono{font-family:var(--mono)}
+.cmt{font-family:var(--mono);font-size:14px;color:var(--volt);margin:0 0 18px;display:block}
+.cmt::before{content:"// ";color:var(--faint)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+
+/* ---------- NAV ---------- */
+.nav{position:fixed;inset:0 0 auto;z-index:60;padding-top:env(safe-area-inset-top,0px);border-bottom:1px solid transparent;transition:background .3s,border-color .3s}
+.nav.scrolled,.nav.open{background:rgba(2,5,15,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+.nav .wrap{height:76px;display:flex;align-items:center;gap:32px}
+.nav .logo img{height:30px;width:auto}
+.nav ul{list-style:none;margin:0 auto 0 24px;padding:0;display:flex;gap:28px}
+.nav ul a{text-decoration:none;color:var(--dim);font-size:15px;transition:color .2s}
+.nav ul a:hover{color:var(--text)}
+.hello{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--mono);font-size:14px;padding:10px 16px;border:1px solid var(--line);border-radius:8px;background:var(--panel);transition:border-color .2s}
+.hello i{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 10px var(--mint)}
+.hello:hover{border-color:var(--volt)}
+.burger{display:none;margin-left:auto;width:44px;height:44px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:18px;cursor:pointer}
+@media (max-width:920px){
+  .nav ul,.nav .hello{display:none}
+  .burger{display:block}
+  .nav.open ul{display:flex;flex-direction:column;position:absolute;left:0;right:0;top:calc(76px + env(safe-area-inset-top,0px));margin:0;gap:0;padding:8px 24px 24px;background:var(--bg);border-bottom:1px solid var(--line)}
+  .nav.open ul a{display:block;padding:14px 0;font-size:18px;color:var(--text);border-bottom:1px solid var(--line)}
+}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;overflow:hidden;isolation:isolate}
+#field{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(70% 60% at 70% 45%,rgba(16,101,220,.16),transparent 70%),
+             linear-gradient(180deg,transparent 65%,var(--bg))}
+.hero-body{flex:1;display:flex;align-items:flex-end;padding:140px 0 56px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;align-items:end}
+.hero h1{margin:0;font-size:clamp(32px,4.2vw,62px);line-height:1.15;font-weight:600;letter-spacing:-.02em}
+.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
+.hero h1 .ln span{display:block;transform:translateY(105%);animation:up 1s cubic-bezier(.2,.8,.2,1) forwards}
+.hero h1 .ln:nth-child(2) span{animation-delay:.12s;color:var(--volt)}
+.hero h1 .ln:nth-child(3) span{animation-delay:.24s;color:var(--volt)}
+@keyframes up{to{transform:none}}
+.hero aside{border-left:1px solid var(--line);padding-left:28px;opacity:0;animation:fade 1s .8s forwards}
+.hero aside p{margin:0 0 24px;color:var(--dim);max-width:44ch}
+.io{display:flex;gap:24px;font-family:var(--mono);font-size:13px;color:var(--faint);margin-bottom:28px}
+.io b{color:var(--text);font-weight:500}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 20px;border-radius:8px;text-decoration:none;font-weight:500;font-size:15px;border:1px solid transparent;transition:background .2s,border-color .2s,transform .2s}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:#1A74F0;transform:translateY(-1px)}
+.btn-line{border-color:var(--line);color:var(--text)}
+.btn-line:hover{border-color:var(--volt)}
+@keyframes fade{to{opacity:1}}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr}.hero aside{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:24px}.hero-body{padding-top:46vh}}
+
+/* ticker */
+.ticker{border-block:1px solid var(--line);overflow:hidden;white-space:nowrap;font-family:var(--mono);font-size:14px;color:var(--dim);padding:16px 0;background:rgba(7,13,30,.6)}
+.ticker div{display:inline-block;animation:tick 60s linear infinite}
+.ticker em{font-style:normal;color:var(--blue);margin:0 18px}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* ---------- SECTIONS ---------- */
+section{padding:128px 0}
+.head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:end;margin-bottom:64px}
+.head h2{margin:0;font-size:clamp(34px,4.4vw,58px);line-height:1.15;font-weight:600;letter-spacing:-.015em}
+.head p{margin:0;color:var(--dim);max-width:48ch}
+@media (max-width:860px){.head{grid-template-columns:1fr;gap:18px;margin-bottom:44px}section{padding:88px 0}}
+
+/* services: list rows with word-diagrams */
+.rows{border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:48px;padding:44px 0;border-bottom:1px solid var(--line);align-items:center}
+.diagram{font-family:var(--mono);font-size:13px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;color:var(--dim)}
+.diagram span{border:1px solid var(--line);background:var(--panel);padding:8px 12px;border-radius:6px;color:var(--text)}
+.diagram span.hot{border-color:rgba(76,155,255,.6);color:var(--volt);box-shadow:0 0 24px -6px rgba(76,155,255,.6)}
+.diagram i{font-style:normal;color:var(--faint)}
+.row .kind{font-family:var(--mono);font-size:13px;color:var(--mint);margin:0 0 8px}
+.row h3{margin:0 0 12px;font-size:clamp(24px,2.4vw,32px);line-height:1.3;font-weight:600}
+.row p{margin:0;color:var(--dim);max-width:58ch}
+.row a.more{display:inline-block;margin-top:16px;font-family:var(--mono);font-size:14px;color:var(--volt);text-decoration:none}
+.row a.more:hover{text-decoration:underline}
+@media (max-width:860px){.row{grid-template-columns:1fr;gap:22px;padding:36px 0}}
+
+/* products */
+.prods{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:32px;position:relative;overflow:hidden}
+.card h3{margin:0 0 4px;font-size:28px;font-weight:600}
+.card .sub{font-family:var(--mono);font-size:13px;color:var(--volt);margin:0 0 14px}
+.card p{margin:0;color:var(--dim)}
+.card.big{grid-row:span 2;display:flex;flex-direction:column;background:linear-gradient(160deg,#0C1D47,var(--panel) 60%)}
+.card.big .feat{display:flex;flex-wrap:wrap;gap:6px;margin:22px 0 26px}
+.card.big .feat span{font-family:var(--mono);font-size:12.5px;padding:5px 10px;border-radius:5px;background:rgba(76,155,255,.1);color:#B9D5FF}
+.card.big .shot{margin-top:auto;border-radius:10px;overflow:hidden;border:1px solid rgba(76,155,255,.3)}
+.card .status{position:absolute;top:28px;right:28px;font-family:var(--mono);font-size:12px;color:var(--mint);display:flex;align-items:center;gap:6px}
+.card .status::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+@media (max-width:860px){.prods{grid-template-columns:1fr}.card.big{grid-row:auto}}
+
+/* work */
+.work{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px;align-items:start}
+.wl{list-style:none;margin:0;padding:0;border-top:1px solid var(--line);counter-reset:w}
+.wl button{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:44px 1fr auto;gap:2px 12px;padding:18px 6px;border-bottom:1px solid var(--line);transition:background .2s}
+.wl .n{grid-row:span 2;font-family:var(--mono);font-size:13px;color:var(--faint);padding-top:4px}
+.wl .t{font-size:18px;font-weight:500;color:var(--dim);transition:color .2s}
+.wl .k{grid-row:span 2;align-self:center;font-family:var(--mono);font-size:12px;color:var(--faint)}
+.wl .c{font-size:14px;color:var(--faint)}
+.wl button:hover .t{color:var(--text)}
+.wl button[aria-selected="true"]{background:linear-gradient(90deg,rgba(16,101,220,.18),transparent)}
+.wl button[aria-selected="true"] .t{color:var(--text)}
+.wl button[aria-selected="true"] .n,.wl button[aria-selected="true"] .k{color:var(--volt)}
+.viewer{position:sticky;top:110px}
+.win{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
+.win .bar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--faint)}
+.win .bar i{width:9px;height:9px;border-radius:50%;background:#1C2846}
+.win .bar span{margin-left:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.screen{position:relative;aspect-ratio:16/10}
+.screen img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;opacity:0;transition:opacity .45s}
+.screen img.on{opacity:1}
+.scan{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(76,155,255,.22) 50%,transparent);height:30%;transform:translateY(-100%)}
+.scan.go{animation:scan .7s ease-out}
+@keyframes scan{to{transform:translateY(340%)}}
+.viewer h3{margin:24px 0 4px;font-size:24px;font-weight:600;line-height:1.35}
+.viewer .client{font-family:var(--mono);font-size:13px;color:var(--volt);margin:0 0 10px}
+.viewer .desc{color:var(--dim);margin:0;max-width:62ch}
+@media (max-width:920px){.work{grid-template-columns:1fr;gap:28px}.viewer{position:static;order:-1}}
+
+/* clients */
+.clients{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.clients li{list-style:none;border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:26px 22px;min-height:100px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;transition:background .25s}
+.clients li:hover{background:var(--panel)}
+.clients b{font-weight:500;font-size:16px;line-height:1.4}
+.clients small{font-family:var(--mono);font-size:12px;color:var(--faint)}
+.clients{padding:0;margin:0}
+.trusted{margin-top:56px;display:flex;flex-wrap:wrap;gap:10px 28px;align-items:baseline;color:var(--dim)}
+.trusted .cmt{margin:0;flex-basis:100%}
+.trusted span{font-size:15px}
+@media (max-width:860px){.clients{grid-template-columns:repeat(2,1fr)}}
+
+/* stack as code */
+.code{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.code .bar{display:flex;justify-content:space-between;padding:12px 18px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12.5px;color:var(--faint)}
+.code pre{margin:0;padding:24px 0;overflow-x:auto;font-family:var(--mono);font-size:14.5px;line-height:1.85;counter-reset:ln}
+.code pre span.l{display:block;padding:0 24px 0 0;white-space:pre}
+.code pre span.l::before{counter-increment:ln;content:counter(ln);display:inline-block;width:48px;text-align:right;padding-right:22px;color:#2B3858}
+.k{color:#C08CFF}.s{color:var(--mint)}.p{color:var(--volt)}.c{color:var(--faint)}
+
+/* process */
+.steps{display:grid;grid-template-columns:repeat(6,1fr);gap:0;border-top:1px solid var(--line)}
+.steps li{list-style:none;padding:26px 18px 0 0;position:relative}
+.steps li::before{content:"";position:absolute;top:-4px;left:0;width:7px;height:7px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 4px var(--bg)}
+.steps .n{font-family:var(--mono);font-size:13px;color:var(--volt)}
+.steps b{display:block;font-weight:600;margin:6px 0 6px;font-size:17px}
+.steps p{margin:0;color:var(--dim);font-size:15px;line-height:1.6}
+.steps{padding:0;margin:0}
+@media (max-width:980px){.steps{grid-template-columns:repeat(2,1fr);row-gap:28px}}
+
+/* pricing */
+.price{display:grid;grid-template-columns:1fr 1.7fr;gap:16px}
+.md{background:linear-gradient(160deg,#0C1D47,var(--panel) 70%);border:1px solid rgba(76,155,255,.35);border-radius:14px;padding:34px;display:flex;flex-direction:column}
+.md h3,.pk h3{margin:0;font-size:20px;font-weight:600}
+.md .num{font-family:var(--mono);font-weight:700;font-size:clamp(52px,5.5vw,68px);line-height:1;margin:22px 0 6px;letter-spacing:-.03em}
+.md .unit{color:var(--dim);margin:0 0 22px}
+.md ul{list-style:none;padding:0;margin:0 0 auto;font-family:var(--mono);font-size:13.5px;color:#B9D5FF;display:flex;flex-wrap:wrap;gap:6px}
+.md li{padding:5px 10px;border-radius:5px;background:rgba(76,155,255,.1)}
+.md .note{margin:22px 0 0;font-size:14px;color:var(--mint)}
+.pk{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:34px}
+.tw{overflow-x:auto}
+.pk table{width:100%;border-collapse:collapse;margin-top:18px;min-width:480px}
+.pk th,.pk td{text-align:left;padding:16px 14px 16px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.pk th{font-family:var(--mono);font-weight:400;font-size:12.5px;color:var(--faint)}
+.pk td{color:var(--dim);font-size:15.5px}
+.pk td:first-child{color:var(--text);font-weight:500;white-space:nowrap}
+.pk td.v{font-family:var(--mono);color:var(--text);font-weight:700;white-space:nowrap;font-size:18px}
+.pk td.v small{display:block;font-weight:400;font-size:12px;color:var(--faint)}
+@media (max-width:860px){.price{grid-template-columns:1fr}.md,.pk{padding:26px}}
+
+/* contact */
+.contact{text-align:left;position:relative;overflow:hidden}
+.contact h2{font-size:clamp(44px,7vw,104px);line-height:1.04;margin:0 0 40px;font-weight:600;letter-spacing:-.025em;max-width:14ch}
+.contact h2 span{color:var(--volt)}
+.cgrid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+.cgrid a,.cgrid div{padding:26px 24px 26px 0;text-decoration:none;display:block;border-right:1px solid var(--line)}
+.cgrid > :not(:first-child){padding-left:24px}
+.cgrid > :last-child{border-right:0}
+.cgrid small{display:block;font-family:var(--mono);font-size:12.5px;color:var(--faint);margin-bottom:6px}
+.cgrid b{font-size:clamp(20px,2vw,26px);font-weight:500}
+.cgrid a:hover b{color:var(--volt)}
+@media (max-width:760px){.cgrid{grid-template-columns:1fr}.cgrid a,.cgrid div{border-right:0;border-bottom:1px solid var(--line);padding:20px 0!important}}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:64px 0 calc(32px + env(safe-area-inset-bottom,0px));background:var(--panel)}
+.fgrid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:32px}
+.fgrid img{height:30px;width:auto;margin-bottom:16px}
+.fgrid p{margin:0;color:var(--dim);font-size:15px;max-width:34ch}
+.fgrid ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.fgrid ul a{color:var(--dim);text-decoration:none;font-size:15px}
+.fgrid ul a:hover{color:var(--text)}
+.fbot{margin-top:56px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:12.5px;color:var(--faint)}
+@media (max-width:860px){.fgrid{grid-template-columns:1fr 1fr}.fgrid > :first-child{grid-column:1/-1}}
+
+.uni-sec{padding-bottom:40px}
+.uni{position:relative;height:min(86vh,900px);min-height:600px;border-block:1px solid var(--line);
+  background:radial-gradient(60% 60% at 50% 50%,rgba(16,101,220,.10),transparent 70%),
+  linear-gradient(var(--line) 1px,transparent 1px) 0 0/56px 56px,
+  linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/56px 56px;background-color:#030816;overflow:hidden}
+.uni::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(80% 80% at 50% 50%,transparent 55%,var(--bg))}
+#uni-svg{width:100%;height:100%;display:block;user-select:none;-webkit-user-select:none}
+#uni-svg.drag{cursor:grabbing}
+.uni-bar{position:absolute;z-index:3;top:16px;left:16px;right:16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;pointer-events:none}
+.uni-bar > *{pointer-events:auto}
+.uni-bar .chips,.uni-bar .ctrl{display:flex;gap:6px;flex-wrap:wrap}
+.uni-bar button{font:inherit;font-size:14px;color:var(--dim);background:rgba(7,13,30,.85);border:1px solid var(--line);border-radius:999px;padding:7px 15px;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:color .2s,border-color .2s,background .2s}
+.uni-bar button:hover{color:var(--text);border-color:rgba(76,155,255,.5)}
+.uni-bar button[aria-pressed="true"]{color:#fff;background:rgba(16,101,220,.35);border-color:var(--volt)}
+.uni-bar .ctrl button{min-width:38px}
+.uni-hint{position:absolute;right:20px;bottom:14px;margin:0;font-size:12px;color:var(--faint);z-index:2}
+/* graph */
+.edge{stroke-width:1;fill:none;transition:opacity .25s}
+.edge.x{stroke-dasharray:3 5}
+.node{cursor:default;transition:opacity .25s}
+.node text{font-family:var(--sans);fill:var(--text)}
+.node .nm{font-size:17px;font-weight:600}
+.node .sub{font-family:var(--mono);font-size:11.5px;fill:#6A7AA0}
+.node .tg{font-family:var(--mono);font-size:9px;font-weight:700;fill:#02050F;letter-spacing:.04em}
+.node.hub .nm{font-size:30px;font-weight:600}
+.node .ring{fill:none;stroke-width:2}
+.node:hover .ring,.node.sel .ring{stroke-width:3.5}
+.node .halo{opacity:0;transition:opacity .25s}
+.node.sel .halo,.node:hover .halo{opacity:.35}
+svg.focus .node:not(.hl){opacity:.12}
+svg.focus .edge:not(.hl){opacity:.04}
+svg.focus .edge.hl{opacity:1!important}
+.node.dim{opacity:.12}
+.edge.dim{opacity:.04}
+.core .spin{transform-origin:0 0;animation:spin 60s linear infinite}
+.core .spin.r{animation-duration:90s;animation-direction:reverse}
+.core text{font-family:var(--mono);font-size:11px;fill:#3E5684;letter-spacing:.18em}
+@keyframes spin{to{transform:rotate(360deg)}}
+.node:focus-visible{outline:none}
+.node:focus-visible .ring{stroke:#fff;stroke-width:3.5}
+/* panel */
+.uni-panel{position:absolute;z-index:4;left:16px;bottom:16px;width:min(380px,calc(100% - 32px));background:rgba(7,13,30,.94);border:1px solid rgba(76,155,255,.35);border-radius:14px;padding:22px 22px 20px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 30px 60px -20px rgba(0,0,0,.7)}
+.uni-panel h3{margin:8px 0 6px;font-size:21px;line-height:1.35;font-weight:600;padding-right:28px}
+.uni-panel p{margin:0;color:var(--dim);font-size:15px;line-height:1.6}
+.uni-panel .tagp{font-family:var(--mono);font-size:11px;font-weight:700;color:#02050F;padding:3px 8px;border-radius:4px}
+.uni-panel .x{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:none;color:var(--dim);cursor:pointer}
+#p-proj .pj{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}#p-proj b{display:block;font-weight:600;font-size:15.5px;margin-bottom:2px}#p-proj p{font-size:14.5px}
+.uni-panel{max-height:calc(100% - 90px);overflow-y:auto}
+.p-links{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.p-links button{font:inherit;font-size:13px;color:var(--text);background:var(--panel-2);border:1px solid var(--line);border-radius:6px;padding:4px 10px;cursor:pointer}
+.p-links button:hover{border-color:var(--volt)}
+@media (max-width:700px){.uni{height:auto;min-height:0;aspect-ratio:4/5;padding-top:52px}.uni-bar .chips{flex-wrap:nowrap;overflow-x:auto;max-width:100%;scrollbar-width:none}.uni-bar .chips::-webkit-scrollbar{display:none}.uni-bar button{white-space:nowrap}.uni-bar button{font-size:13px;padding:6px 12px}.uni-hint{display:none}}
+@media (prefers-reduced-motion:reduce){.core .spin{animation:none}}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="3PN Business Solution หน้าแรก"><img src="/assets/logo-white.webp" alt="3PN Business Solution Co., Ltd."></a>
+    <ul id="menu">
+      <li><a href="#services">บริการ</a></li>
+      <li><a href="#work">ผลงาน</a></li>
+      <li><a href="#stack">เทคโนโลยี</a></li>
+    </ul>
+    <a class="hello" href="#contact"><i></i>คุยโปรเจกต์กับเรา</a>
+    <button class="burger" id="burger" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="menu">☰</button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" style="padding:0" aria-label="แนะนำบริษัท">
+    <canvas id="field" aria-hidden="true"></canvas>
+    <div class="hero-body">
+      <div class="wrap hero-grid">
+        <h1><span class="ln"><span>เข้าใจโจทย์</span></span><span class="ln"><span>ส่งมอบระบบที่ใช้ได้จริง</span></span></h1>
+        <aside>
+          <div class="io"><span>input → <b>โจทย์ธุรกิจ</b></span><span>output → <b>ซอฟต์แวร์</b></span></div>
+          <p>3PN Business Solution ออกแบบและพัฒนาเว็บไซต์ ระบบงาน และแพลตฟอร์มให้หน่วยงานภาครัฐและเอกชน ตั้งแต่วิเคราะห์ความต้องการจนถึงดูแลหลังขึ้นระบบ</p>
+          <div class="btns">
+            <a class="btn btn-primary" href="#contact">ปรึกษาโปรเจกต์ฟรี</a>
+            <a class="btn btn-line" href="#work">ดูผลงาน</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <div class="ticker" aria-hidden="true"><div id="tick">WEBSITE<em>//</em>CUSTOM SOFTWARE<em>//</em>SMART CITY DASHBOARD<em>//</em>GIS &amp; MAP SYSTEM<em>//</em>HRM &amp; PAYROLL<em>//</em>LINE INTEGRATION<em>//</em>E-MARKETPLACE<em>//</em>RESTAURANT SYSTEM<em>//</em>SALE PAGE<em>//</em>CLOUD &amp; DEVOPS<em>//</em></div></div>
+  </section>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="head">
+        <div><span class="cmt">บริการของเรา</span><h2>ทีมเดียวที่ดูแลตั้งแต่โจทย์แรกจนระบบขึ้นใช้งาน</h2></div>
+        <p>นอกจากเป็นพันธมิตรทางธุรกิจ เราเป็นทีมผู้เชี่ยวชาญด้านเทคโนโลยีที่พร้อมให้คำปรึกษา และช่วยให้ธุรกิจเติบโตในยุคดิจิทัลอย่างยั่งยืน</p>
+      </div>
+      <div class="rows">
+        <article class="row">
+          <div class="diagram"><span>โจทย์</span><i>→</i><span>BA</span><i>→</i><span>UX/UI</span><i>→</i><span>DEV</span><i>→</i><span>TEST</span><i>→</i><span class="hot">GO-LIVE</span></div>
+          <div><p class="kind">Business Solution</p><h3>พัฒนาเว็บไซต์และซอฟต์แวร์ตามโจทย์</h3><p>ออกแบบและพัฒนาระบบให้ตรงกับงานจริงของแต่ละองค์กร ทั้งเว็บไซต์องค์กร ระบบบริหารจัดการ และระบบลงทะเบียน เพื่อเพิ่มโอกาสและต่อยอดธุรกิจ</p></div>
+        </article>
+        <article class="row">
+          <div class="diagram"><span>ข้อมูลภาคสนาม</span><i>→</i><span>แผนที่</span><i>+</i><span>เรื่องร้องเรียน</span><i>→</i><span class="hot">DASHBOARD</span></div>
+          <div><p class="kind">Government &amp; Smart City</p><h3>ระบบข้อมูลและแผนที่สำหรับหน่วยงานรัฐ</h3><p>รวมข้อมูลสินทรัพย์ งานซ่อมบำรุง และเรื่องร้องเรียนจากประชาชนไว้บนแผนที่และ Dashboard เดียว ช่วยให้ผู้บริหารตัดสินใจจากข้อมูลจริง</p><a class="more" href="#work">ดูผลงานภาครัฐ »</a></div>
+        </article>
+        <article class="row">
+          <div class="diagram"><span>HR Pro</span><span>DinePass</span><span>E-Marketplace</span><i>→</i><span class="hot">พร้อมใช้</span></div>
+          <div><p class="kind">Product Development</p><h3>ผลิตภัณฑ์สำเร็จรูปที่เราพัฒนาเอง</h3><p>เริ่มใช้งานได้ทันทีโดยไม่ต้องพัฒนาใหม่ทั้งหมด และปรับแต่งเพิ่มเติมได้ตามรูปแบบธุรกิจ</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="work" class="uni-sec">
+    <div class="wrap">
+      <div class="head">
+        <div><span class="cmt">ผลงานและลูกค้า</span><h2>จักรวาลของ 3PN</h2></div>
+        <p>ลูกค้าภาครัฐ เอกชน และเครือข่ายนวัตกรรมที่ไว้วางใจเรา</p>
+      </div>
+    </div>
+    <div class="uni" id="uni">
+      <div class="uni-bar">
+        <div class="chips" role="group" aria-label="กรองประเภท" id="uni-filter">
+          <button data-f="all" aria-pressed="true">ทั้งหมด</button>
+          <button data-f="client" aria-pressed="false">ลูกค้า</button>
+          <button data-f="network" aria-pressed="false">เครือข่าย</button>
+        </div>
+      </div>
+      <svg id="uni-svg" role="img" aria-label="แผนผังความเชื่อมโยงของลูกค้า ผลงาน ผลิตภัณฑ์ และเทคโนโลยีของ 3PN"></svg>
+      <aside class="uni-panel" id="uni-panel" hidden>
+        <button class="x" id="uni-close" aria-label="ปิด">✕</button>
+        <span class="tagp" id="p-tag"></span>
+        <h3 id="p-name"></h3>
+        <p id="p-desc"></p>
+        <div id="p-proj"></div>
+        <div class="p-links" id="p-links"></div>
+      </aside>
+      
+    </div>
+  </section>
+
+  <section id="stack" style="padding-top:40px">
+    <div class="wrap">
+      <div class="head">
+        <div><span class="cmt">เทคโนโลยี</span><h2>เลือกเครื่องมือให้เหมาะกับงาน ไม่ใช่ตามกระแส</h2></div>
+        <p>ตั้งแต่หน้าจอที่ผู้ใช้เห็น ไปจนถึงเซิร์ฟเวอร์ ระบบส่งมอบอัตโนมัติ และการเฝ้าระวังที่ทำงานอยู่เบื้องหลัง</p>
+      </div>
+      <div class="code">
+        <div class="bar"><span>3pn.stack.ts</span><span>TypeScript</span></div>
+<pre><span class="l"><span class="c">// สิ่งที่เราใช้สร้างระบบให้ลูกค้า</span></span><span class="l"><span class="k">export const</span> stack = {</span><span class="l">  <span class="p">frontend</span>: [<span class="s">"Vue.js"</span>, <span class="s">"Nuxt 3"</span>, <span class="s">"Tailwind CSS"</span>, <span class="s">"Bootstrap"</span>],</span><span class="l">  <span class="p">backend</span>:  [<span class="s">"Node.js"</span>, <span class="s">"NestJS"</span>, <span class="s">"PHP"</span>, <span class="s">"Laravel"</span>, <span class="s">"Lumen"</span>],</span><span class="l">  <span class="p">database</span>: [<span class="s">"PostgreSQL"</span>, <span class="s">"MySQL"</span>, <span class="s">"MariaDB"</span>, <span class="s">"SQL Server"</span>, <span class="s">"MongoDB"</span>],</span><span class="l">  <span class="p">realtime</span>: [<span class="s">"Redis"</span>, <span class="s">"MQTT"</span>],</span><span class="l">  <span class="p">delivery</span>: [<span class="s">"GitLab"</span>, <span class="s">"GitHub"</span>, <span class="s">"Jenkins"</span>, <span class="s">"Docker"</span>, <span class="s">"Nginx"</span>, <span class="s">"IIS"</span>],</span><span class="l">  <span class="p">cloud</span>:    [<span class="s">"AWS"</span>, <span class="s">"DigitalOcean"</span>, <span class="s">"Bangmod.Cloud"</span>, <span class="s">"Cloudflare"</span>],</span><span class="l">  <span class="p">server</span>:   [<span class="s">"Ubuntu"</span>, <span class="s">"Debian"</span>, <span class="s">"Windows Server"</span>],</span><span class="l">  <span class="p">monitor</span>:  [<span class="s">"Grafana"</span>, <span class="s">"Prometheus"</span>, <span class="s">"Node Exporter"</span>],</span><span class="l">  <span class="p">api</span>:      [<span class="s">"Swagger"</span>, <span class="s">"Postman"</span>],</span><span class="l">  <span class="p">cms</span>:      [<span class="s">"WordPress"</span>],</span><span class="l">  <span class="p">mobile</span>:   [<span class="s">"Android Studio"</span>],</span><span class="l">};</span></pre>
+      </div>
+    </div>
+  </section>
+
+  <section id="process" style="padding-top:40px">
+    <div class="wrap">
+      <div class="head">
+        <div><span class="cmt">ขั้นตอนการทำงาน</span><h2>ทุกโปรเจกต์เริ่มจากการคุยโจทย์</h2></div>
+        <p>ทีมครบทั้ง PM, BA, Front-end, Back-end และ Tester ทำให้คุณคุยกับทีมเดียวตลอดโปรเจกต์</p>
+      </div>
+      <ol class="steps">
+        <li><span class="n">01</span><b>คุยโจทย์</b><p>ทำความเข้าใจปัญหาและเป้าหมายธุรกิจ</p></li>
+        <li><span class="n">02</span><b>วิเคราะห์ระบบ</b><p>BA สรุปความต้องการและขอบเขตงาน</p></li>
+        <li><span class="n">03</span><b>ออกแบบ</b><p>UX/UI ให้ผู้ใช้จริงใช้งานได้ง่าย</p></li>
+        <li><span class="n">04</span><b>พัฒนา</b><p>Front-end และ Back-end พร้อมอัปเดตความคืบหน้า</p></li>
+        <li><span class="n">05</span><b>ทดสอบ</b><p>Tester ตรวจสอบก่อนส่งมอบ</p></li>
+        <li><span class="n">06</span><b>ขึ้นระบบและดูแล</b><p>ส่งมอบพร้อมบริการดูแลหลังใช้งาน</p></li>
+      </ol>
+    </div>
+  </section>
+
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <span class="cmt">ติดต่อเรา</span>
+      <h2>มีโจทย์อยู่ในมือ? <span>เล่าให้เราฟัง</span></h2>
+      <div class="cgrid">
+        <a href="tel:0929529726"><small>โทร</small><b>092-952-9726</b></a>
+        <a href="https://line.me/ti/p/~Tan0441" target="_blank" rel="noopener"><small>LINE ID</small><b>Tan0441</b></a>
+        <div><small>ผู้ติดต่อ</small><b>K.Teenathad</b></div>
+      </div>
+      <div class="btns" style="margin-top:32px">
+        <a class="btn btn-primary" href="https://line.me/ti/p/~Tan0441" target="_blank" rel="noopener">แอด LINE เพื่อคุยโปรเจกต์</a>
+        <a class="btn btn-line" href="tel:0929529726">โทรหาเรา</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div><img src="/assets/logo-white.webp" alt="3PN Business Solution"><p>พันธมิตรด้านเทคโนโลยีที่ออกแบบและพัฒนาซอฟต์แวร์ให้ธุรกิจและหน่วยงานภาครัฐ</p></div>
+      <div><span class="cmt">บริการ</span><ul><li><a href="#services">Business Solution</a></li><li><a href="#services">ระบบภาครัฐ</a></li><li><a href="#work">ผลงาน</a></li></ul></div>
+      <div><span class="cmt">ผลิตภัณฑ์</span><ul><li><a href="#services">HR Pro</a></li><li><a href="#services">DinePass</a></li><li><a href="#services">E-Marketplace</a></li></ul></div>
+      <div><span class="cmt">ติดต่อ</span><ul><li><a href="tel:0929529726">092-952-9726</a></li><li><a href="https://line.me/ti/p/~Tan0441" target="_blank" rel="noopener">LINE: Tan0441</a></li></ul></div>
+    </div>
+    <div class="fbot"><span>© <span id="yr"></span> 3PN Business Solution Co., Ltd.</span><span>input → output</span></div>
+  </div>
+</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+/* ---------- chrome ---------- */
+const tick=$('tick');tick.innerHTML+=tick.innerHTML;
+const nav=$('nav'),burger=$('burger');
+const onS=()=>nav.classList.toggle('scrolled',scrollY>30);addEventListener('scroll',onS,{passive:true});onS();
+burger.onclick=()=>{const o=nav.classList.toggle('open');burger.setAttribute('aria-expanded',o);burger.textContent=o?'✕':'☰'};
+document.querySelectorAll('#menu a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');burger.setAttribute('aria-expanded',false);burger.textContent='☰'}));
+$('yr').textContent=new Date().getFullYear();
+
+/* ---------- glyph field: code characters assemble into 3PN ---------- */
+(function(){
+  const cv=$('field'),ctx=cv.getContext('2d');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const CH="01{}<>/;=[]()#$*+".split("");
+  let W,H,dpr,parts=[],mx=-9999,my=-9999,visible=true,t0=performance.now();
+  const logo=new Image();logo.src="/assets/mark.png";
+  function build(){
+    dpr=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;
+    cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    const mobile=W<900;
+    const step=mobile?6:9;
+    const mw=mobile?W*.9:Math.min(W*.58,820);
+    const mh=mw*logo.height/logo.width;
+    const ox=(W-mw)/2;
+    const oy=mobile?H*.12:Math.max(96,(76+H*.6)/2-mh/2);
+    const off=document.createElement('canvas');off.width=Math.ceil(mw);off.height=Math.ceil(mh);
+    const o=off.getContext('2d');o.drawImage(logo,0,0,mw,mh);
+    const d=o.getImageData(0,0,off.width,off.height).data;
+    parts=[];
+    for(let y=0;y<mh;y+=step)for(let x=0;x<mw;x+=step){
+      const a=d[(Math.floor(y)*off.width+Math.floor(x))*4+3];
+      if(a>140)parts.push(mk(ox+x,oy+y,true));
+    }
+    const amb=Math.floor(W*H/(mobile?9000:6000));
+    for(let i=0;i<amb;i++)parts.push(mk(Math.random()*W,Math.random()*H,false));
+    t0=performance.now();
+    ctx.font=`${mobile?9:12}px "JetBrains Mono",ui-monospace,monospace`;
+  }
+  function mk(tx,ty,target){
+    return{tx,ty,target,x:Math.random()*W,y:Math.random()*H,vx:0,vy:0,
+      c:CH[Math.random()*CH.length|0],delay:Math.random()*900,flick:Math.random(),
+      drift:(Math.random()-.5)*.25,fall:.15+Math.random()*.5}
+  }
+  function frame(now){
+    if(!visible){requestAnimationFrame(frame);return}
+    ctx.clearRect(0,0,W,H);
+    const el=now-t0;
+    for(const p of parts){
+      if(Math.random()<.004)p.c=CH[Math.random()*CH.length|0];
+      if(p.target){
+        const k=el>p.delay?.06:0;
+        p.vx+=(p.tx-p.x)*k*.35;p.vy+=(p.ty-p.y)*k*.35;
+      }else{
+        p.vy+=(p.fall-p.vy)*.02;p.vx+=(p.drift-p.vx)*.02;
+        if(p.y>H+10){p.y=-10;p.x=Math.random()*W}
+      }
+      const dx=p.x-mx,dy=p.y-my,d2=dx*dx+dy*dy;
+      if(d2<9000){const f=(9000-d2)/9000*2.2,d=Math.sqrt(d2)||1;p.vx+=dx/d*f;p.vy+=dy/d*f}
+      p.vx*=.82;p.vy*=.82;p.x+=p.vx;p.y+=p.vy;
+      if(p.target){
+        const off=Math.hypot(p.x-p.tx,p.y-p.ty);
+        const a=Math.max(.35,1-off/300)*(.75+.25*Math.sin(now*.003+p.flick*20));
+        ctx.fillStyle=off>18?`rgba(76,155,255,${a*.8})`:(p.flick>.93?`rgba(94,240,200,${a})`:`rgba(110,170,255,${a})`);
+      }else ctx.fillStyle=`rgba(90,120,190,${.12+p.flick*.18})`;
+      ctx.fillText(p.c,p.x,p.y);
+    }
+    if(!reduce)requestAnimationFrame(frame);
+  }
+  function start(){build();if(reduce){parts.forEach(p=>{if(p.target){p.x=p.tx;p.y=p.ty}});t0=-1e5}requestAnimationFrame(frame)}
+  logo.complete?start():logo.onload=start;
+  let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(build,200)});
+  addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top},{passive:true});
+  addEventListener('pointerleave',()=>{mx=my=-9999});
+  new IntersectionObserver(es=>{visible=es[0].isIntersecting}).observe(cv);
+})();
+
+/* ---------- 3PN universe graph ---------- */
+(function(){
+const LG={"tat": "/assets/logos/tat.webp", "gypsum": "/assets/logos/gypsum.webp", "nongbua": "/assets/logos/nongbua.webp", "pea": "/assets/logos/pea.webp", "powerkid": "/assets/logos/powerkid.webp", "hmc": "/assets/logos/hmc.webp", "feelgreat": "/assets/logos/feelgreat.webp", "creative": "/assets/logos/creative.webp", "thaolai": "/assets/logos/thaolai.webp", "danika": "/assets/logos/danika.webp", "niramit": "/assets/logos/niramit.webp", "goevent": "/assets/logos/goevent.webp", "startup": "/assets/logos/startup.webp", "mdes": "/assets/logos/mdes.webp", "depa": "/assets/logos/depa.webp", "nia": "/assets/logos/nia.webp", "thaihealth": "/assets/logos/thaihealth.webp", "sysi": "/assets/logos/sysi.webp", "kris": "/assets/logos/kris.webp", "step": "/assets/logos/step.webp", "bma": "/assets/logos/bma.webp", "exat": "/assets/logos/exat.webp"};
+const MARK="/assets/mark.png";
+const KIND={client:"ลูกค้า",project:"ผลงาน",service:"บริการ",product:"ผลิตภัณฑ์",tech:"เทคโนโลยี",network:"เครือข่าย"};
+const KTAG={client:"CLIENT",project:"PROJECT",service:"SERVICE",product:"PRODUCT",tech:"TOOL",network:"NETWORK"};
+const HUBS=[
+ {id:"svc", name:"บริการพัฒนาระบบ", x:900, y:40, color:"#7FD3FF", desc:"ทีมเดียวครบทั้ง PM, BA, UX/UI, Front-end, Back-end และ Tester ดูแลตั้งแต่โจทย์แรกจนระบบขึ้นใช้งาน"},
+ {id:"gov", name:"ภาครัฐ & Smart City", x:420, y:400, color:"#4C9BFF", desc:"ระบบข้อมูล แผนที่ และ Dashboard สำหรับหน่วยงานรัฐและรัฐวิสาหกิจ"},
+ {id:"pvt", name:"ธุรกิจเอกชน", x:1380, y:400, color:"#5EF0C8", desc:"เว็บไซต์ แพลตฟอร์ม และระบบสำหรับแบรนด์และธุรกิจหลากหลายอุตสาหกรรม"},
+ {id:"prod",name:"ผลิตภัณฑ์ 3PN", x:1580, y:900, color:"#FF7AA8", desc:"ซอฟต์แวร์สำเร็จรูปที่เราพัฒนาและดูแลเอง พร้อมใช้งานทันที"},
+ {id:"net", name:"เครือข่ายนวัตกรรม", x:900, y:1000, color:"#F5C451", desc:"หน่วยงานด้านนวัตกรรมและดิจิทัลที่ไว้วางใจและร่วมงานกับเรา"},
+ {id:"tech",name:"เทคโนโลยี", x:900, y:1160, color:"#A98BFF", desc:"เครื่องมือที่เราใช้สร้าง ส่งมอบ และดูแลระบบให้ลูกค้า"}
+];
+const N=[
+ // services
+ {id:"web",hub:"svc",kind:"service",name:"เว็บไซต์องค์กร",sub:"Website"},
+ {id:"sale",hub:"svc",kind:"service",name:"Sale page & แคมเปญ",sub:"Marketing"},
+ {id:"reg",hub:"svc",kind:"service",name:"ระบบลงทะเบียน & ประกวด",sub:"Registration"},
+ {id:"mgmt",hub:"svc",kind:"service",name:"ระบบบริหารจัดการ",sub:"Back-office"},
+ {id:"gis",hub:"svc",kind:"service",name:"GIS & แผนที่",sub:"Map system"},
+ {id:"dash",hub:"svc",kind:"service",name:"Dashboard ข้อมูล",sub:"Analytics"},
+ {id:"line",hub:"svc",kind:"service",name:"LINE Integration",sub:"Messaging"},
+ {id:"ux",hub:"svc",kind:"service",name:"UX/UI Design",sub:"Design"},
+ // gov
+ {id:"bma",hub:"gov",kind:"client",name:"กรุงเทพมหานคร",logo:"bma",links:["p-light","p-asset"]},
+ {id:"exat",hub:"gov",kind:"client",name:"การทางพิเศษแห่งประเทศไทย",logo:"exat",links:["p-exat"]},
+ {id:"pea",hub:"gov",kind:"client",name:"การไฟฟ้าส่วนภูมิภาค",logo:"pea",links:["p-pea"]},
+ {id:"nongbua",hub:"gov",kind:"client",name:"จังหวัดหนองบัวลำภู",logo:"nongbua"},
+ {id:"tat",hub:"gov",kind:"client",name:"การท่องเที่ยวแห่งประเทศไทย (ททท.)",logo:"tat"},
+ {id:"p-light",hub:"gov",kind:"project",name:"Smart Lighting กทม.",sub:"เสาไฟกว่า 33,000 ต้น",links:["gis","dash"],
+  desc:"ระบบบริหารจัดการไฟฟ้าแสงสว่างอัจฉริยะ ติดตามสถานะเสาไฟบนแผนที่ แยกไฟติด-ไฟดับ พร้อมรับเรื่องร้องเรียนจากประชาชน"},
+ {id:"p-asset",hub:"gov",kind:"project",name:"สินทรัพย์โครงสร้างพื้นฐาน กทม.",sub:"Traffy Fondue",links:["gis","dash"],
+  desc:"Dashboard ติดตามโครงการซ่อมบำรุงทั่วกรุงเทพฯ เชื่อมเรื่องร้องเรียนจาก Traffy Fondue แยกตามประเภทปัญหาและสถานะ"},
+ {id:"p-exat",hub:"gov",kind:"project",name:"ระบบบำรุงทางพิเศษ",sub:"Maintenance",links:["dash","gis"],
+  desc:"สรุปข้อมูลสภาพทางพิเศษรายสายทางและรายปี แสดงผลเป็นกราฟและแผนที่ ช่วยวางแผนงานบำรุงรักษา"},
+ {id:"p-pea",hub:"gov",kind:"project",name:"PEA Sustainability",sub:"Design → Dev",links:["web","ux"],
+  desc:"เว็บไซต์นำเสนอกลยุทธ์การพัฒนาองค์กรสู่ความยั่งยืน รับผิดชอบตั้งแต่ Design จนถึง Development"},
+ // private
+ {id:"gypsum",hub:"pvt",kind:"client",name:"ยิปซัมตราช้าง",logo:"gypsum",links:["p-sabai"]},
+ {id:"feelgreat",hub:"pvt",kind:"client",name:"Feel Great Balance",logo:"feelgreat",links:["p-feel"]},
+ {id:"thaolai",hub:"pvt",kind:"client",name:"Thaolai.com",logo:"thaolai",links:["p-thaolai"]},
+ {id:"hmc",hub:"pvt",kind:"client",name:"HMC Polymers",logo:"hmc"},
+ {id:"niramit",hub:"pvt",kind:"client",name:"Siam Niramit Phuket",logo:"niramit"},
+ {id:"goevent",hub:"pvt",kind:"client",name:"GoEvent",logo:"goevent"},
+ {id:"danika",hub:"pvt",kind:"client",name:"DANIKA",logo:"danika"},
+ {id:"powerkid",hub:"pvt",kind:"client",name:"PowerKid",logo:"powerkid"},
+ {id:"creative",hub:"pvt",kind:"client",name:"Creative Cafe",logo:"creative"},
+ {id:"p-sabai",hub:"pvt",kind:"project",name:"บ้านซำบาย 2023",sub:"Contest platform",links:["reg","web"],
+  desc:"เว็บไซต์โครงการประกวดแบบภายในของยิปซัมตราช้าง รองรับการประชาสัมพันธ์ ลงทะเบียน และส่งผลงานประกวด"},
+ {id:"p-feel",hub:"pvt",kind:"project",name:"Feel Great Sale page",sub:"Global customers",links:["sale"],
+  desc:"Sale page ที่ใช้เว็บไซต์เป็นเครื่องมือการตลาดและเก็บข้อมูลลูกค้าเพื่อวิเคราะห์ธุรกิจ ลูกค้าส่วนใหญ่เป็นชาวต่างชาติ"},
+ {id:"p-thaolai",hub:"pvt",kind:"project",name:"Thaolai.com Platform",sub:"Proptech",links:["gis","mgmt"],
+  desc:"เว็บค้นหาเช่าคอนโด บ้าน โฮมออฟฟิศ และอสังหาริมทรัพย์ทั่วประเทศไทย พร้อมค้นหาประกาศบนแผนที่"},
+ // products
+ {id:"hrpro",hub:"prod",kind:"product",name:"HR Pro",sub:"HRM + Payroll",big:1,links:["line","mgmt"],
+  desc:"โปรแกรม HRM และระบบ Payroll เข้าถึงข้อมูลได้ตลอด 24 ชั่วโมง แม้ไม่มีฝ่าย HR ก็จัดการงานบุคคลได้ครบ"},
+ {id:"dinepass",hub:"prod",kind:"product",name:"DinePass",sub:"Restaurant system",big:1,desc:"ระบบสำหรับร้านอาหาร จัดการงานหน้าร้านและหลังร้านในที่เดียว"},
+ {id:"emkt",hub:"prod",kind:"product",name:"E-Marketplace",sub:"Multi-vendor",big:1,desc:"ระบบตลาดซื้อขายออนไลน์พร้อมใช้ รองรับผู้ขายหลายราย"},
+ {id:"f-time",hub:"prod",kind:"product",name:"Time Attendance",sub:"HR Pro",links:["hrpro","line"]},
+ {id:"f-pay",hub:"prod",kind:"product",name:"Payroll Management",sub:"HR Pro",links:["hrpro"]},
+ {id:"f-ess",hub:"prod",kind:"product",name:"Employee Self Service",sub:"HR Pro",links:["hrpro"]},
+ {id:"f-rep",hub:"prod",kind:"product",name:"Report & Insight",sub:"HR Pro",links:["hrpro","dash"]},
+ // network
+ {id:"startup",hub:"net",kind:"network",name:"Startup Thailand",logo:"startup"},
+ {id:"mdes",hub:"net",kind:"network",name:"กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม",logo:"mdes"},
+ {id:"depa",hub:"net",kind:"network",name:"depa",logo:"depa"},
+ {id:"nia",hub:"net",kind:"network",name:"สำนักงานนวัตกรรมแห่งชาติ (NIA)",logo:"nia"},
+ {id:"thaihealth",hub:"net",kind:"network",name:"สสส.",logo:"thaihealth"},
+ {id:"sysi",hub:"net",kind:"network",name:"SYSI",logo:"sysi"},
+ {id:"kris",hub:"net",kind:"network",name:"KRiS · KMITL",logo:"kris"},
+ {id:"step",hub:"net",kind:"network",name:"STeP · Chiang Mai University",logo:"step"},
+ // tech
+ {id:"t-fe",hub:"tech",kind:"tech",name:"Vue.js · Nuxt 3",sub:"Frontend",links:["web","ux"]},
+ {id:"t-be",hub:"tech",kind:"tech",name:"NestJS · Laravel",sub:"Backend",links:["mgmt"]},
+ {id:"t-db",hub:"tech",kind:"tech",name:"PostgreSQL · MySQL",sub:"Database"},
+ {id:"t-rt",hub:"tech",kind:"tech",name:"Redis · MQTT",sub:"Realtime"},
+ {id:"t-ci",hub:"tech",kind:"tech",name:"Docker · Jenkins",sub:"Delivery"},
+ {id:"t-cloud",hub:"tech",kind:"tech",name:"AWS · DigitalOcean",sub:"Cloud"},
+ {id:"t-mon",hub:"tech",kind:"tech",name:"Grafana · Prometheus",sub:"Monitoring"},
+ {id:"t-wp",hub:"tech",kind:"tech",name:"WordPress",sub:"CMS",links:["web","sale"]}
+];
+// fold project nodes into their client logos
+(function(){
+  const proj=N.filter(n=>n.kind==="project");
+  proj.forEach(pj=>{
+    const c=N.find(n=>n.kind==="client"&&(n.links||[]).includes(pj.id));
+    if(!c)return;
+    (c.projects=c.projects||[]).push({name:pj.name,desc:pj.desc});
+    c.links=[...new Set([...(c.links||[]).filter(x=>x!==pj.id),...(pj.links||[])])];
+  });
+  for(let i=N.length-1;i>=0;i--)if(N[i].kind==="project")N.splice(i,1);
+})();
+// logos only: keep client + network nodes and their hubs
+for(let i=N.length-1;i>=0;i--)if(!["client","network"].includes(N[i].kind))N.splice(i,1);
+N.forEach(n=>{if(n.links)n.links=n.links.filter(id=>N.some(m=>m.id===id))});
+for(let i=HUBS.length-1;i>=0;i--)if(!["gov","pvt","net"].includes(HUBS[i].id))HUBS.splice(i,1);
+const C={x:900,y:600};
+const hubById={};HUBS.forEach(h=>{h.kind="hub";h.isHub=1;hubById[h.id]=h});
+const byId={...hubById};N.forEach(n=>byId[n.id]=n);
+
+/* ---- layout: fan leaves away from the core, then relax ---- */
+HUBS.forEach(h=>{
+  const ORD={gov:["nongbua","bma","tat","exat","pea"]};
+  let kids=N.filter(n=>n.hub===h.id);if(ORD[h.id])kids.sort((x,y)=>ORD[h.id].indexOf(x.id)-ORD[h.id].indexOf(y.id));
+  const a0=Math.atan2(h.y-C.y,h.x-C.x);
+  const span=Math.min(Math.PI*1.5,.42*kids.length+.4);
+  kids.forEach((n,i)=>{
+    const a=a0-span/2+span*(kids.length===1?.5:i/(kids.length-1));
+    const r=(n.logo?290:250)+(i%2)*95;
+    n.x=h.x+Math.cos(a)*r;n.y=h.y+Math.sin(a)*r;
+  });
+});
+const leaves=N;
+const size=n=>n.logo?{w:132,h:92}:{w:190,h:44};
+for(let it=0;it<260;it++){
+  for(let i=0;i<leaves.length;i++){
+    const a=leaves[i];
+    for(let j=i+1;j<leaves.length;j++){
+      const b=leaves[j];let dx=b.x-a.x,dy=b.y-a.y;
+      const need=(a.logo&&b.logo)?135:(a.logo||b.logo)?150:150;
+      const nx=Math.abs(dx)/((size(a).w+size(b).w)/2+30), ny=Math.abs(dy)/((size(a).h+size(b).h)/2+22);
+      if(nx<1&&ny<1){const d=Math.hypot(dx,dy)||1,f=(1-Math.max(nx,ny))*6;dx/=d;dy/=d;a.x-=dx*f;a.y-=dy*f;b.x+=dx*f;b.y+=dy*f}
+    }
+    // keep away from core and from other hubs
+    [C,...HUBS].forEach(o=>{if(o===hubById[a.hub])return;const dx=a.x-o.x,dy=a.y-o.y,d=Math.hypot(dx,dy)||1,m=o===C?300:190;if(d<m){a.x+=dx/d*(m-d)*.2;a.y+=dy/d*(m-d)*.2}});
+    // spring to own hub
+    const h=hubById[a.hub],dx=a.x-h.x,dy=a.y-h.y,d=Math.hypot(dx,dy)||1,t=a.logo?300:270;
+    a.x-=dx/d*(d-t)*.03;a.y-=dy/d*(d-t)*.03;
+  }
+}
+
+/* ---- build SVG ---- */
+const NS="http://www.w3.org/2000/svg",svg=document.getElementById("uni-svg");
+const el=(t,a={},p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
+const defs=el("defs",{},svg);
+const world=el("g",{},svg);
+const gE=el("g",{},world),gCore=el("g",{class:"core",transform:`translate(${C.x} ${C.y})`},world),gN=el("g",{},world);
+
+// edges
+const edges=[];
+function addEdge(a,b,cls,color,op){const e=el("line",{x1:a.x,y1:a.y,x2:b.x,y2:b.y,class:"edge "+(cls||""),stroke:color,opacity:op},gE);edges.push({a,b,e,op});}
+HUBS.forEach(h=>addEdge(C,h,"",h.color,.45));
+N.forEach(n=>addEdge(hubById[n.hub],n,"",hubById[n.hub].color,.38));
+const seen=new Set();
+N.forEach(n=>(n.links||[]).forEach(id=>{const k=[n.id,id].sort().join("|");if(seen.has(k)||!byId[id])return;seen.add(k);addEdge(n,byId[id],"x","#8FB4FF",.22)}));
+const nbr={};edges.forEach(({a,b})=>{const ia=a.id||"core",ib=b.id||"core";(nbr[ia]=nbr[ia]||new Set()).add(ib);(nbr[ib]=nbr[ib]||new Set()).add(ia)});
+
+// core: rotating code rings + mark
+el("circle",{r:150,fill:"#030816",opacity:.85},gCore);
+const s1=el("g",{class:"spin"},gCore);
+el("circle",{r:132,fill:"none",stroke:"#1B3A78","stroke-width":10,"stroke-dasharray":"2 7 14 5 4 9"},s1);
+el("circle",{r:108,fill:"none",stroke:"#1065DC","stroke-width":3,"stroke-dasharray":"22 10 6 14",opacity:.8},s1);
+const s2=el("g",{class:"spin r"},gCore);
+el("circle",{r:120,fill:"none",stroke:"#5EF0C8","stroke-width":2,"stroke-dasharray":"1 18",opacity:.7},s2);
+el("circle",{r:92,fill:"none",stroke:"#2A4A8A","stroke-width":6,"stroke-dasharray":"3 6",opacity:.9},s2);
+el("path",{id:"corepath",d:"M -148 0 A 148 148 0 1 1 148 0 A 148 148 0 1 1 -148 0",fill:"none"},defs);
+const s3=el("g",{class:"spin r"},gCore);
+const tx=el("text",{},s3),tp=el("textPath",{href:"#corepath"},tx);
+tp.textContent="WEBSITE // SOFTWARE // SMART CITY // HR PRO // GIS // DASHBOARD // E-MARKETPLACE // CLOUD // ";
+el("image",{href:MARK,x:-75.0,y:-18.5,width:150,height:37.0},gCore);
+
+// nodes
+const nodeEls={};
+function nodeColor(n){return n.isHub?n.color:hubById[n.hub].color}
+function drawNode(n){
+  const col=nodeColor(n);
+  const g=el("g",{class:"node"+(n.isHub?" hub":""),transform:`translate(${n.x} ${n.y})`,"aria-label":n.name},gN);
+  g.dataset.id=n.id;g.dataset.kind=n.kind;
+  if(n.isHub){
+    el("circle",{class:"halo",r:46,fill:col},g);
+    el("circle",{r:30,fill:col,opacity:.18},g);
+    el("circle",{r:17,fill:col},g);
+    el("circle",{class:"ring",r:24,stroke:col,opacity:.5},g);
+    el("text",{class:"nm","text-anchor":"middle",y:62,fill:col,style:`fill:${col}`},g).textContent=n.name;
+  }else if(n.logo){
+    const w=132,h=74;
+    el("rect",{class:"halo",x:-w/2-8,y:-h/2-8,width:w+16,height:h+16,rx:16,fill:col},g);
+    const cid="clip-"+n.id;const cp=el("clipPath",{id:cid},defs);el("rect",{x:-w/2,y:-h/2,width:w,height:h,rx:10},cp);
+    el("rect",{x:-w/2,y:-h/2,width:w,height:h,rx:10,fill:"#fff"},g);
+    el("image",{href:LG[n.logo],x:-w/2+5,y:-h/2+5,width:w-10,height:h-10,preserveAspectRatio:"xMidYMid meet","clip-path":`url(#${cid})`},g);
+    el("rect",{class:"ring",x:-w/2,y:-h/2,width:w,height:h,rx:10,stroke:col},g);
+    const t=el("text",{"text-anchor":"middle",y:h/2+18},g);
+    el("tspan",{class:"sub",x:0},t).textContent=KTAG[n.kind];
+  }else{
+    const r=n.big?15:10;
+    el("circle",{class:"halo",r:r+12,fill:col},g);
+    el("circle",{r:r,fill:"#030816"},g);
+    el("circle",{r:r-4,fill:col,opacity:n.big?1:.75},g);
+    el("circle",{class:"ring",r:r,stroke:col},g);
+    el("text",{class:"nm",x:r+10,y:-2,style:n.big?"font-size:18px":""},g).textContent=n.name;
+    const tw=KTAG[n.kind].length*6.4+10;
+    el("rect",{x:r+10,y:6,width:tw,height:14,rx:3,fill:col},g);
+    el("text",{class:"tg",x:r+15,y:16.5},g).textContent=KTAG[n.kind];
+    if(n.sub)el("text",{class:"sub",x:r+16+tw,y:17},g).textContent=n.sub;
+  }
+  g.addEventListener("pointerenter",()=>focus(n.id));
+  g.addEventListener("pointerleave",()=>focus(sel));
+  nodeEls[n.id]=g;
+}
+HUBS.forEach(drawNode);N.forEach(drawNode);
+
+/* ---- focus / panel ---- */
+let sel=null;
+function focus(id){
+  if(!id){svg.classList.remove("focus");return}
+  svg.classList.add("focus");
+  const set=new Set([id,...(nbr[id]||[])]);
+  Object.entries(nodeEls).forEach(([k,g])=>g.classList.toggle("hl",set.has(k)));
+  edges.forEach(({a,b,e})=>e.classList.toggle("hl",(a.id||"core")===id||(b.id||"core")===id));
+}
+const panel=document.getElementById("uni-panel");
+function open(id){
+  const n=byId[id];sel=id;
+  Object.values(nodeEls).forEach(g=>g.classList.remove("sel"));nodeEls[id].classList.add("sel");
+  const col=nodeColor(n);
+  const tag=document.getElementById("p-tag");tag.textContent=n.isHub?"HUB":KTAG[n.kind];tag.style.background=col;
+  document.getElementById("p-name").textContent=n.name;
+  document.getElementById("p-desc").textContent=n.desc||(n.isHub?"":(KIND[n.kind]+"ใน"+hubById[n.hub].name));
+  const pd=document.getElementById("p-proj");pd.innerHTML="";
+  (n.projects||[]).forEach(pj=>{const d=document.createElement("div");d.className="pj";const b=document.createElement("b");b.textContent=pj.name;const q=document.createElement("p");q.textContent=pj.desc;d.append(b,q);pd.appendChild(d)});
+  const box=document.getElementById("p-links");box.innerHTML="";
+  [...(nbr[id]||[])].filter(k=>k!=="core").forEach(k=>{const b=document.createElement("button");b.textContent=byId[k].name;b.onclick=()=>{open(k);center(byId[k])};box.appendChild(b)});
+  panel.hidden=false;focus(id);
+}
+function close(){sel=null;panel.hidden=true;Object.values(nodeEls).forEach(g=>g.classList.remove("sel"));focus(null)}
+document.getElementById("uni-close").onclick=close;
+
+
+/* ---- filter ---- */
+document.querySelectorAll("#uni-filter button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("#uni-filter button").forEach(x=>x.setAttribute("aria-pressed",x===b));
+  const f=b.dataset.f;
+  Object.entries(nodeEls).forEach(([k,g])=>{const n=byId[k];g.classList.toggle("dim",f!=="all"&&!n.isHub&&n.kind!==f)});
+  edges.forEach(({a,b:bb,e})=>{const ok=x=>!x.id||x.isHub||f==="all"||x.kind===f;e.classList.toggle("dim",!(ok(a)&&ok(bb)))});
+});
+
+/* ---- fixed view (no zoom) ---- */
+let vb;const all=[...HUBS,...N];
+const bbox=()=>{let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;all.forEach(n=>{x0=Math.min(x0,n.x-90);y0=Math.min(y0,n.y-60);x1=Math.max(x1,n.x+90);y1=Math.max(y1,n.y+70)});
+  x0=Math.min(x0,C.x-170);x1=Math.max(x1,C.x+170);y0=Math.min(y0,C.y-170);return{x0,y0,x1,y1}};
+function fit(){
+  const r=svg.getBoundingClientRect(),b=bbox(),pad=50;
+  let w=b.x1-b.x0+pad*2,hh=b.y1-b.y0+pad*2,ar=r.width/r.height;
+  if(w/hh>ar)hh=w/ar;else w=hh*ar;
+  vb={x:(b.x0+b.x1)/2-w/2,y:(b.y0+b.y1)/2-hh/2,w,h:hh};
+  svg.setAttribute("viewBox",`${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+}
+fit();let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(fit,150)});
+
+/* ---- motion: floating nodes + data pulses along the links ---- */
+const reduceM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+all.forEach((n,i)=>{n.bx=n.x;n.by=n.y;n.ph=Math.random()*Math.PI*2;n.sp=.35+Math.random()*.35;n.amp=n.isHub?7:11});
+const gP=el("g",{},world);world.insertBefore(gP,gN);
+const pulses=edges.map(ed=>{const col=ed.a.isHub?ed.a.color:(ed.b.isHub?ed.b.color:"#8FB4FF");
+  return{ed,c:el("circle",{r:ed.a.id?2.6:3.4,fill:col},gP),p:Math.random(),v:.12+Math.random()*.18}});
+let vis=true,last=performance.now();
+new IntersectionObserver(es=>{vis=es[0].isIntersecting}).observe(svg);
+function step(now){
+  const dt=Math.min(.05,(now-last)/1000);last=now;
+  if(vis){
+    const t=now/1000;
+    all.forEach(n=>{n.x=n.bx+Math.sin(t*n.sp+n.ph)*n.amp;n.y=n.by+Math.cos(t*n.sp*.8+n.ph*1.3)*n.amp;
+      nodeEls[n.id].setAttribute("transform",`translate(${n.x.toFixed(1)} ${n.y.toFixed(1)})`)});
+    edges.forEach(({a,b,e})=>{e.setAttribute("x1",a.x.toFixed(1));e.setAttribute("y1",a.y.toFixed(1));e.setAttribute("x2",b.x.toFixed(1));e.setAttribute("y2",b.y.toFixed(1))});
+    pulses.forEach(q=>{q.p=(q.p+q.v*dt)%1;const {a,b}=q.ed;
+      q.c.setAttribute("cx",(a.x+(b.x-a.x)*q.p).toFixed(1));q.c.setAttribute("cy",(a.y+(b.y-a.y)*q.p).toFixed(1));
+      q.c.setAttribute("opacity",(Math.sin(q.p*Math.PI)*.9).toFixed(2))});
+  }
+  requestAnimationFrame(step);
+}
+if(!reduceM)requestAnimationFrame(step);else gP.remove();
+})();
+</script>
+</body>
+</html>
